@@ -1,0 +1,21 @@
+name: Accessibility barrier
+description: A component fails a requirement in standards/.
+labels: [accessibility]
+body:
+  - type: input
+    attributes:
+      label: Component
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: Requirement
+      description: For example WCAG 2.2 SC 1.4.11 or EN 301 549 clause 9.4.1.1.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: What fails
+      description: Steps, browser, assistive technology and what is announced or shown.
+    validations:
+      required: true

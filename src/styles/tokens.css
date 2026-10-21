@@ -1,0 +1,311 @@
+/*
+ * Design tokens. An institutional palette (navy ink, gold accent,
+ * teal/purple/violet secondary accents, see src/utils/themes.js) with a calm
+ * execution: soft radii, generous line-height, ink-tinted borders and
+ * subtle, large-blur shadows.
+ *
+ * Typeface: Fira Sans (SIL OFL, self-hosted) for body and display text,
+ * differentiated by weight (400/600/700/900).
+ *
+ * Every component reads from these variables only, so a consumer can
+ * reskin the whole library by overriding this file (or a subset of it) in
+ * their own CSS: no build step or component edits required.
+ */
+
+:root {
+  /* ---- Brand colors ---- */
+  --cui-color-navy: #001d35; /* primary text / headline / ink */
+  --cui-color-navy-700: #102d49;
+  --cui-color-navy-600: #30353b;
+  --cui-color-anthracite: #30353b; /* neutral dark accent / button surface */
+  --cui-color-teal: #02767f; /* secondary accent, links on light */
+  --cui-color-purple: #3b2781; /* deep accent */
+  --cui-color-violet: #6e57ce; /* interactive accent, hover states */
+  --cui-color-sky: #80cdeb; /* light accent, illustration tint */
+  --cui-color-yellow: #ffed3e; /* primary call-to-action / highlight */
+  --cui-color-yellow-ring: #fae83d;
+
+  --cui-color-white: #ffffff;
+  --cui-color-grey-50: #f6f6f8;
+  --cui-color-grey-100: #eeeeee;
+  --cui-color-grey-300: #cccccc;
+  --cui-color-grey-500: #7f7f7f;
+  --cui-color-grey-700: #4b5259;
+
+  --cui-color-success: #0e7a3f;
+  --cui-color-warning: #a15c00;
+  --cui-color-danger: #b3261e;
+  --cui-color-info: var(--cui-color-teal);
+
+  /* Soft tint pairs for status surfaces (Alert, Badge): kept as named
+     tokens (not just inline hex in each component) so the "reskin by
+     overriding tokens.css" story in the header comment above also holds
+     for feedback colors, and so every component that shows a soft
+     success/warning/danger/info surface agrees on the exact same tint. */
+  --cui-success-bg: #e7f5ec;
+  --cui-success-text: #0e4326;
+  --cui-warning-bg: #fdf1dc;
+  --cui-warning-text: #5c3600;
+  --cui-danger-bg: #fbe9e8;
+  --cui-danger-text: #6b1512;
+  --cui-info-bg: #e6f4f5;
+  --cui-info-text: #023a3f;
+
+  /* Ink-tinted line colors instead of neutral grey: borders/dividers read
+     as part of the same warm system instead of a generic UI-kit grey. */
+  --cui-color-line: rgba(0, 29, 53, 0.14);
+  --cui-color-line-strong: rgba(0, 29, 53, 0.26);
+
+  /* ---- Semantic aliases (what components actually consume) ---- */
+  --cui-text: var(--cui-color-navy);
+  --cui-text-muted: #4c5c6c;
+  --cui-text-on-dark: var(--cui-color-white);
+  /* Brand/status colors used as *text* (eyebrows, breadcrumbs, field errors,
+     trend labels): separate from the swatches because a dark color mode
+     has to lighten the text without touching the fills that carry a white
+     label (info banner, danger button, ...). */
+  --cui-text-secondary: var(--cui-color-teal);
+  --cui-text-danger: var(--cui-color-danger);
+  --cui-text-success: var(--cui-color-success);
+  --cui-text-warning: var(--cui-color-warning);
+  --cui-heading: var(--cui-color-navy);
+  --cui-bg: var(--cui-color-white);
+  --cui-bg-subtle: var(--cui-color-grey-50);
+  --cui-bg-muted: var(--cui-color-grey-100);
+  --cui-border: var(--cui-color-line);
+  --cui-border-strong: var(--cui-color-navy);
+  /* Outline of a control whose edge is the only thing that shows it is
+     there: text fields, select, the Switch track, inactive Carousel dots,
+     the bottom-sheet handle. WCAG 1.4.11 needs 3:1 against the surrounding
+     colors (3.80:1 on white, 3.17:1 on --cui-bg-muted); --cui-border stays
+     for decorative dividers and card frames. */
+  --cui-border-control: #758592;
+
+  /* Component surfaces: what cards, inputs, menus and the navbar paint
+     themselves with, instead of a literal white. Split by elevation so a
+     dark color mode (or a brand that wants a paper-toned card on a white
+     page) can tell them apart: `surface` for in-flow boxes (Card, inputs,
+     StatCard, ListGroup, Sidebar, Pagination), `surface-raised` for things
+     floating above the page (Modal, Dropdown menu, Popover, Toast,
+     CookieConsent), `surface-glass` for the translucent sticky Navbar.
+     `on-surface` is the text color that belongs on them. */
+  --cui-surface: var(--cui-color-white);
+  --cui-surface-raised: var(--cui-color-white);
+  --cui-surface-glass: rgba(255, 255, 255, 0.94);
+  --cui-on-surface: var(--cui-text);
+
+  --cui-primary: var(--cui-color-navy); /* emphasis fill: primary button, active tab/page, checked box, tooltip */
+  --cui-primary-contrast: var(--cui-color-white);
+  --cui-primary-hover: var(--cui-color-navy-700);
+  --cui-accent: var(--cui-color-yellow);
+  --cui-accent-contrast: var(--cui-color-navy); /* label on an accent fill (accent button, badge, warning banner) */
+  --cui-accent-on-primary: var(--cui-color-yellow); /* accent used as text on a primary band (hero eyebrow, stat values, top bar) */
+  --cui-accent-hover: #f5df1f;
+  --cui-link: var(--cui-color-teal);
+  --cui-link-hover: var(--cui-color-purple);
+  /* Teal instead of the raw brand yellow: same tone already used
+     for links/focus borders elsewhere, so the ring reads as one calm,
+     coordinated accent instead of a harsh warning-yellow flash: while
+     still meeting WCAG 1.4.11 Non-text Contrast (>3:1) against white,
+     navy and grey surfaces alike. */
+  --cui-focus-ring: var(--cui-color-teal);
+
+  /* ---- Typography ---- */
+  --cui-font-sans: 'Fira Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+  --cui-font-serif: 'Source Serif 4', Cambria, Georgia, 'Droid Serif', serif;
+  --cui-font-mono: 'Source Code Pro', 'SFMono-Regular', Consolas, monospace;
+  /* Headings: h1-h3 and every title element that isn't an h-tag (card
+     titles/names, hero/stage title, footer column titles, quote source).
+     Defaults reproduce the one-family design; set --cui-font-heading for a
+     serif/sans pair. */
+  --cui-font-heading: var(--cui-font-sans);
+  --cui-heading-weight: 700;
+  --cui-heading-letter-spacing: -0.02em;
+  --cui-heading-line-height: 1.15;
+  --cui-heading-display-weight: 800; /* hero/stage headline */
+
+  --cui-fz-base: 1.6rem;
+  --cui-lh-base: 1.6;
+  --cui-fz-sm: 1.4rem;
+  --cui-fz-lead: 1.7rem; /* intro/lead paragraphs: .cui-lead and section intros */
+  --cui-fz-h1: clamp(3.4rem, 4.6vw + 1rem, 6rem);
+  --cui-fz-h2: clamp(2.6rem, 2.4vw + 1rem, 3.6rem);
+  --cui-fz-h3: clamp(2.1rem, 1.2vw + 1rem, 2.6rem);
+  --cui-fz-h4: 1.9rem;
+  --cui-lh-display: 1.05; /* large hero/stage H1s: tight enough to feel editorial, loose enough that descenders/umlauts never touch */
+
+  /* ---- Spacing scale ---- */
+  --cui-space-1: 0.4rem;
+  --cui-space-2: 0.8rem;
+  --cui-space-3: 1.2rem;
+  --cui-space-4: 1.6rem;
+  --cui-space-5: 2.4rem;
+  --cui-space-6: 3.2rem;
+  --cui-space-7: 4.8rem;
+  --cui-space-8: 6.4rem;
+  /* 2.4× the body text size, but in rem: an `em` gutter scaled with each
+     container's own font-size, so sections with smaller text (TopBar,
+     SiteFooter, AlertBanner) had narrower gutters and their content edges
+     didn't line up with the sections around them. */
+  --cui-gutter: calc(2.4 * var(--cui-fz-base));
+  --cui-container-max: 1248px;
+
+  /* ---- Shape / elevation ----
+     Soft, moderate radii: round enough to feel friendly, never a pill on
+     a button, never a sharp cut corner. Shadows stay very subtle
+     (low alpha, large blur) so elevation reads as a gentle lift, not a
+     hard drop shadow. */
+  --cui-radius-sm: 4px;
+  --cui-radius-md: 7px;
+  --cui-radius-lg: 10px;
+  --cui-radius-pill: 999px;
+  /* Buttons read their shape/weight from these, so a brand can round them
+     into pills or lighten the label without touching inputs and cards. */
+  --cui-btn-radius: var(--cui-radius-md);
+  --cui-btn-font-weight: 600;
+  --cui-shadow-sm: 0 1px 3px rgba(7, 22, 38, 0.08);
+  --cui-shadow-md: 0 8px 24px rgba(7, 22, 38, 0.1);
+  --cui-shadow-lg: 0 20px 48px rgba(7, 22, 38, 0.14);
+  --cui-shadow-float: 0 12px 28px rgba(7, 22, 38, 0.16); /* floating connector/teaser shadow */
+
+  /* Subtle, consistent treatment for hero/stage background photography,
+     a small contrast/brightness correction so any image reads as
+     intentionally "designed" rather than a raw, clashing stock photo. */
+  --cui-media-filter: contrast(1.05) brightness(0.96) saturate(1.04);
+
+  /* ---- Motion ---- */
+  --cui-ease: cubic-bezier(0.16, 1, 0.3, 1); /* ease-out-expo: snappy, not linear-feeling */
+  --cui-duration-fast: 120ms;
+  --cui-duration: 200ms;
+  --cui-duration-slow: 320ms;
+
+  /* ---- Layering ---- */
+  --cui-z-dropdown: 1000;
+  --cui-z-sticky: 1010;
+  --cui-z-offcanvas: 1040;
+  --cui-z-modal: 1050;
+  --cui-z-popover: 1060;
+  --cui-z-tooltip: 1070;
+  --cui-z-toast: 1080;
+}
+
+/* Optional dark surface tokens: used by components that render on the
+   navy hero/footer bands, toggled via [data-cui-theme="dark"]. The
+   .cui-section--dark utility gets the same tokens, so its headings and links
+   don't vanish into the band (applyPalette() writes both selectors). */
+[data-cui-theme='dark'],
+.cui-section--dark {
+  --cui-text: var(--cui-color-white);
+  --cui-heading: var(--cui-color-white);
+  --cui-bg: var(--cui-color-navy);
+  --cui-bg-subtle: var(--cui-color-navy-700);
+  --cui-border: rgba(255, 255, 255, 0.24);
+  --cui-border-control: #8c99a4;
+  --cui-link: var(--cui-color-sky);
+  --cui-focus-ring: var(--cui-color-sky); /* teal doesn't read against navy: sky keeps 3:1+ */
+}
+
+/* ---- Dark color mode ----
+   Page-wide, opt-in: set data-cui-mode on <html>, "dark" forces it, "auto"
+   follows the visitor's OS/browser setting (prefers-color-scheme), "light"
+   or no attribute keeps the light design. setColorMode()/useColorMode() and
+   <ColorModeToggle> manage the attribute for you (docs/theming.md → Dark and
+   light mode). Values are generatePalette('default').darkMode exactly,
+   test/styles/dark-mode.spec.js keeps the two in sync; applyPalette() writes
+   a matching block for a configured brand palette.
+
+   Every derived token is restated rather than left to `var()` chains from
+   :root, so the attribute also works on a single subtree. */
+[data-cui-mode='dark'] {
+  color-scheme: dark;
+  --cui-color-grey-50: #182128;
+  --cui-color-grey-100: #272f36;
+  --cui-color-grey-300: #555b61;
+  --cui-color-grey-500: #929699;
+  --cui-color-grey-700: #ced0d2;
+  --cui-color-line: rgba(255, 255, 255, 0.14);
+  --cui-color-line-strong: rgba(255, 255, 255, 0.28);
+  --cui-success-bg: #0c2121;
+  --cui-success-text: #129f52;
+  --cui-warning-bg: #1e1e1a;
+  --cui-warning-text: #ca7300;
+  --cui-danger-bg: #20171d;
+  --cui-danger-text: #e1544c;
+  --cui-info-bg: #0b2129;
+  --cui-info-text: #0397a2;
+  --cui-text: #e7e8e8;
+  --cui-text-muted: #acafb2;
+  --cui-text-secondary: #03a0ac;
+  --cui-text-danger: #e56962;
+  --cui-text-success: #13a857;
+  --cui-text-warning: #d47900;
+  --cui-heading: #ffffff;
+  --cui-bg: #0c151d;
+  --cui-bg-subtle: #161e26;
+  --cui-bg-muted: #242c34;
+  --cui-border: rgba(255, 255, 255, 0.14);
+  --cui-border-strong: #b6b9bb;
+  --cui-border-control: #797e83;
+  --cui-surface: #182128;
+  --cui-surface-raised: #222a31;
+  --cui-surface-glass: rgba(12, 21, 29, 0.9);
+  --cui-on-surface: #e7e8e8;
+  --cui-primary: #dee6ed;
+  --cui-primary-contrast: #0c151d;
+  --cui-primary-hover: #ffffff;
+  --cui-link: #80cdeb;
+  --cui-link-hover: #b3e1f3;
+  --cui-focus-ring: #80cdeb;
+  --cui-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
+  --cui-shadow-md: 0 8px 24px rgba(0, 0, 0, 0.45);
+  --cui-shadow-lg: 0 20px 48px rgba(0, 0, 0, 0.5);
+  --cui-shadow-float: 0 12px 28px rgba(0, 0, 0, 0.5);
+}
+
+@media (prefers-color-scheme: dark) {
+  [data-cui-mode='auto'] {
+    color-scheme: dark;
+    --cui-color-grey-50: #182128;
+    --cui-color-grey-100: #272f36;
+    --cui-color-grey-300: #555b61;
+    --cui-color-grey-500: #929699;
+    --cui-color-grey-700: #ced0d2;
+    --cui-color-line: rgba(255, 255, 255, 0.14);
+    --cui-color-line-strong: rgba(255, 255, 255, 0.28);
+    --cui-success-bg: #0c2121;
+    --cui-success-text: #129f52;
+    --cui-warning-bg: #1e1e1a;
+    --cui-warning-text: #ca7300;
+    --cui-danger-bg: #20171d;
+    --cui-danger-text: #e1544c;
+    --cui-info-bg: #0b2129;
+    --cui-info-text: #0397a2;
+    --cui-text: #e7e8e8;
+    --cui-text-muted: #acafb2;
+    --cui-text-secondary: #03a0ac;
+    --cui-text-danger: #e56962;
+    --cui-text-success: #13a857;
+    --cui-text-warning: #d47900;
+    --cui-heading: #ffffff;
+    --cui-bg: #0c151d;
+    --cui-bg-subtle: #161e26;
+    --cui-bg-muted: #242c34;
+    --cui-border: rgba(255, 255, 255, 0.14);
+    --cui-border-strong: #b6b9bb;
+    --cui-border-control: #797e83;
+    --cui-surface: #182128;
+    --cui-surface-raised: #222a31;
+    --cui-surface-glass: rgba(12, 21, 29, 0.9);
+    --cui-on-surface: #e7e8e8;
+    --cui-primary: #dee6ed;
+    --cui-primary-contrast: #0c151d;
+    --cui-primary-hover: #ffffff;
+    --cui-link: #80cdeb;
+    --cui-link-hover: #b3e1f3;
+    --cui-focus-ring: #80cdeb;
+    --cui-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
+    --cui-shadow-md: 0 8px 24px rgba(0, 0, 0, 0.45);
+    --cui-shadow-lg: 0 20px 48px rgba(0, 0, 0, 0.5);
+    --cui-shadow-float: 0 12px 28px rgba(0, 0, 0, 0.5);
+  }
+}

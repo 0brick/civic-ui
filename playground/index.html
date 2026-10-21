@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      // Reverses the redirect from public/404.html. Inline so it runs before
+      // src/router.js reads the location.
+      ;(function (l) {
+        if (l.search[1] === '/') {
+          var decoded = l.search
+            .slice(1)
+            .split('&')
+            .map(function (s) {
+              return s.replace(/~and~/g, '&')
+            })
+            .join('?')
+          window.history.replaceState(null, null, l.pathname.slice(0, -1) + decoded + l.hash)
+        }
+      })(window.location)
+    </script>
+
+    <title>Civic UI: Vue 3 Component Library for Public-Sector Websites</title>
+    <meta
+      name="description"
+      content="Civic UI is an open-source Vue 3 component library and page-building kit for government and civic websites: accessible by default (WCAG 2.2 AA, EN 301 549, BITV 2.0), privacy-first with zero third-party requests, and MIT-licensed."
+    />
+    <link rel="canonical" href="https://civic.servergedoens.de/" />
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content="Felix L" />
+    <meta name="theme-color" content="#001d35" />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <!-- Open Graph / Facebook, LinkedIn, Slack, Mastodon, ... -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Civic UI" />
+    <meta property="og:url" content="https://civic.servergedoens.de/" />
+    <meta property="og:title" content="Civic UI: Vue 3 Component Library for Public-Sector Websites" />
+    <meta
+      property="og:description"
+      content="A full page-building kit for government and civic websites: dozens of accessible components and ready-to-drop sections, built with Vue 3. Accessible by default, privacy-first, MIT-licensed."
+    />
+    <meta property="og:image" content="https://civic.servergedoens.de/og-image.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Civic UI: Vue 3 component library for public-sector websites" />
+    <meta property="og:locale" content="en_US" />
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Civic UI: Vue 3 Component Library for Public-Sector Websites" />
+    <meta
+      name="twitter:description"
+      content="A full page-building kit for government and civic websites: dozens of accessible components and ready-to-drop sections, built with Vue 3. Accessible by default, privacy-first, MIT-licensed."
+    />
+    <meta name="twitter:image" content="https://civic.servergedoens.de/og-image.jpg" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "@id": "https://civic.servergedoens.de/#website",
+            "url": "https://civic.servergedoens.de/",
+            "name": "Civic UI",
+            "description": "Documentation and live component gallery for Civic UI, an open-source Vue 3 component library for government and civic websites.",
+            "inLanguage": "en"
+          },
+          {
+            "@type": "SoftwareApplication",
+            "@id": "https://civic.servergedoens.de/#software",
+            "name": "Civic UI",
+            "url": "https://civic.servergedoens.de/",
+            "description": "A clean, professional Vue 3 component library with a calm, high-trust institutional design language: accessible and ready to drop into any government or civic project.",
+            "applicationCategory": "DeveloperApplication",
+            "operatingSystem": "Any (Vue 3 / Node.js)",
+            "programmingLanguage": "Vue.js",
+            "softwareVersion": "__CIVIC_UI_VERSION__",
+            "license": "https://github.com/0brick/civic-ui/blob/main/LICENSE",
+            "codeRepository": "https://github.com/0brick/civic-ui",
+            "downloadUrl": "https://www.npmjs.com/package/civic-ui",
+            "isAccessibleForFree": true,
+            "author": { "@type": "Person", "name": "Felix L" },
+            "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+          }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

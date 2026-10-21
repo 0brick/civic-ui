@@ -1,0 +1,97 @@
+{
+  "name": "civic-ui",
+  "version": "1.0.0",
+  "description": "Accessible Vue 3 components and page sections for public-sector and institutional websites. WCAG 2.2 AA, GDPR-friendly, zero runtime dependencies.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Felix L <fjl@posteo.de>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/0brick/civic-ui.git"
+  },
+  "homepage": "https://civic.servergedoens.de",
+  "bugs": "https://github.com/0brick/civic-ui/issues",
+  "keywords": [
+    "vue",
+    "vue3",
+    "component-library",
+    "design-system",
+    "ui-kit",
+    "accessibility",
+    "wcag",
+    "bitv",
+    "gdpr",
+    "government"
+  ],
+  "main": "./dist/civic-ui.umd.cjs",
+  "module": "./dist/civic-ui.es.js",
+  "types": "./dist/types/index.d.ts",
+  "style": "./dist/civic-ui.css",
+  "bin": {
+    "civic-ui": "./cli/civic-ui.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/civic-ui.es.js",
+      "require": "./dist/civic-ui.umd.cjs"
+    },
+    "./unstyled": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/civic-ui.unstyled.es.js"
+    },
+    "./style.css": "./dist/civic-ui.css",
+    "./tokens.css": "./src/styles/tokens.css",
+    "./locales": {
+      "types": "./dist/types/locales/index.d.ts",
+      "import": "./src/locales/index.js"
+    },
+    "./audit": "./cli/audit/index.js",
+    "./cli/civic-ui.js": "./cli/civic-ui.js"
+  },
+  "files": [
+    "dist",
+    "src/styles",
+    "src/locales",
+    "src/assets/fonts",
+    "cli"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "node scripts/build.mjs",
+    "build:lib": "cross-env MODE=lib vite build && npm run build:types",
+    "build:types": "vue-tsc --project tsconfig.json",
+    "preview": "vite preview",
+    "prepare": "npm run build:lib",
+    "test": "vitest run",
+    "test:a11y-e2e": "node scripts/a11y-e2e.mjs",
+    "docs:index": "node scripts/component-index.mjs",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "sbom": "npm sbom --sbom-format cyclonedx --omit dev > sbom.cdx.json"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "peerDependencies": {
+    "vue": "^3.4.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@vitejs/plugin-vue": "^6.0.9",
+    "@vue/test-utils": "^2.5.1",
+    "axe-core": "^4.13.0",
+    "cross-env": "^7.0.3",
+    "eslint": "^10.10.0",
+    "eslint-config-prettier": "^9.1.2",
+    "eslint-plugin-vue": "^10.11.0",
+    "jsdom": "^30.0.1",
+    "marked": "^18.0.13",
+    "prettier": "^3.9.7",
+    "typescript": "^5.9.3",
+    "vite": "^8.3.2",
+    "vitest": "^5.0.3",
+    "vue": "^3.5.0",
+    "vue-tsc": "^2.2.12"
+  }
+}

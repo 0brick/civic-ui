@@ -1,0 +1,228 @@
+/* A handful of layout utilities so sections/pages can be assembled without
+   writing new CSS for every project. Deliberately small: this is a
+   component library, not a utility framework. */
+
+.cui-container {
+  width: 100%;
+  max-width: var(--cui-container-max);
+  margin-inline: auto;
+  padding-inline: var(--cui-gutter);
+}
+
+.cui-container--narrow {
+  max-width: 860px;
+}
+
+.cui-section {
+  padding-block: var(--cui-section-padding, var(--cui-space-8));
+}
+
+.cui-section--subtle {
+  background: var(--cui-bg-subtle);
+}
+
+/* A white/paper band between subtle ones (the page bg can be tinted). */
+.cui-section--paper {
+  background: var(--cui-surface);
+}
+
+/* Dark band: also carries the [data-cui-theme='dark'] tokens (tokens.css),
+   so headings, links and outline buttons inside switch to light ink. */
+.cui-section--dark {
+  background: var(--cui-color-navy);
+  color: var(--cui-text);
+}
+
+/* Tracks are minmax(0, 1fr), not 1fr: a 1fr track never shrinks below its
+   content's min-content width, so one long word or IBAN would push the grid
+   past the container edge. */
+.cui-grid {
+  display: grid;
+  gap: var(--cui-space-5);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+}
+
+.cui-grid--2 {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+}
+
+/* Main column + sidebar (text beside a facts box, a donation card, a TOC). */
+.cui-grid--aside,
+.cui-grid--aside-start {
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+}
+@media (min-width: 900px) {
+  .cui-grid--2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .cui-grid--3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .cui-grid--4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .cui-grid--aside {
+    grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
+  }
+  .cui-grid--aside-start {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.7fr);
+  }
+
+  /* Fewer items than columns: cap the column count at the item count, so
+     e.g. 3 stats in a --4 grid fill the row instead of leaving an empty
+     track on the right. Same result auto-fit gives below 900px. Later
+     rules win (equal specificity), so order runs from 3 down to 1. */
+  .cui-grid--4:not(:has(> :nth-child(4))) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .cui-grid--3:not(:has(> :nth-child(3))),
+  .cui-grid--4:not(:has(> :nth-child(3))) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .cui-grid--2:not(:has(> :nth-child(2))),
+  .cui-grid--3:not(:has(> :nth-child(2))),
+  .cui-grid--4:not(:has(> :nth-child(2))) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* Sticks below a sticky Navbar, which publishes its height as
+   --cui-navbar-height (0 without one). */
+.cui-sticky {
+  position: sticky;
+  top: calc(var(--cui-navbar-height, 0px) + var(--cui-space-4));
+}
+
+.cui-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cui-space-4);
+}
+
+.cui-cluster {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--cui-space-3);
+}
+
+.cui-text-center {
+  text-align: center;
+}
+
+/* Content-alignment tags for section head/intro blocks (title + lead text).
+   Unlike .cui-text-center, these also pull a block that carries its own
+   max-width (most section intros do) along with the text, via auto margins,
+   text-align alone would leave a narrower block pinned to the left/right
+   edge of its container regardless of which way the text inside it points. */
+.cui-align-left {
+  text-align: left;
+}
+.cui-align-center {
+  text-align: center;
+  margin-inline: auto;
+}
+.cui-align-right {
+  text-align: right;
+  margin-inline: auto 0;
+}
+
+.cui-eyebrow {
+  display: inline-block;
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: var(--cui-eyebrow-letter-spacing, 0.08em);
+  text-transform: uppercase;
+  color: var(--cui-eyebrow-color, var(--cui-text-secondary));
+  margin-bottom: var(--cui-space-2);
+}
+
+/* Eyebrow with a short rule in front of it. */
+.cui-eyebrow--lined {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--cui-space-3);
+}
+.cui-eyebrow--lined::before {
+  content: '';
+  flex: none;
+  width: 2.4rem;
+  height: 2px;
+  background: currentColor;
+}
+
+/* Small uppercase field label: above a value in a facts box, a contact
+   block, a table of contents. */
+.cui-label {
+  display: block;
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--cui-text-muted);
+}
+
+/* Lead paragraph: the larger intro under a page or section title. */
+.cui-lead {
+  font-size: var(--cui-fz-lead);
+  line-height: 1.6;
+  color: var(--cui-lead-color, var(--cui-text-muted));
+}
+
+/* Long running text (statutes, reports, articles): a readable measure and
+   vertical rhythm for whatever markup the CMS produces. */
+.cui-prose {
+  max-width: var(--cui-prose-max, 68ch);
+}
+.cui-prose > :first-child {
+  margin-top: 0;
+}
+.cui-prose > :last-child {
+  margin-bottom: 0;
+}
+.cui-prose :is(p, ul, ol, dl, table, figure, blockquote, pre) {
+  margin: 0 0 var(--cui-space-4);
+}
+.cui-prose h2 {
+  margin-top: var(--cui-space-7);
+}
+.cui-prose h3 {
+  margin-top: var(--cui-space-6);
+}
+.cui-prose h4 {
+  margin-top: var(--cui-space-5);
+}
+.cui-prose :is(ul, ol) {
+  padding-inline-start: 1.4em;
+}
+.cui-prose li + li {
+  margin-top: var(--cui-space-2);
+}
+.cui-prose :is(img, video) {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--cui-radius-md);
+}
+/* a raw <blockquote> from CMS markup; the Quote component styles itself */
+.cui-prose > blockquote {
+  margin-inline: 0;
+  padding-inline-start: var(--cui-space-4);
+  border-inline-start: 3px solid var(--cui-accent);
+  font-family: var(--cui-font-serif);
+  font-size: 1.15em;
+}
+.cui-prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+}
+.cui-prose :is(th, td) {
+  padding: var(--cui-space-2) var(--cui-space-3);
+  border-bottom: 1px solid var(--cui-border);
+  text-align: start;
+  vertical-align: top;
+}
+.cui-prose :is(a, code) {
+  overflow-wrap: anywhere;
+}

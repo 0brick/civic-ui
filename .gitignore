@@ -1,0 +1,20 @@
+# Dependencies and build output
+node_modules/
+dist/
+playground-dist/
+sbom.cdx.json
+coverage/
+*.log
+
+# Environment
+.env
+.env.*
+
+# Editors and OS
+.idea/
+.vscode/
+.DS_Store
+
+# Local, not part of the project
+/internal/
+.claude/

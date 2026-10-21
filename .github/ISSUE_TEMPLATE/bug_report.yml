@@ -1,0 +1,25 @@
+name: Bug report
+description: Something does not work as documented.
+labels: [bug]
+body:
+  - type: textarea
+    attributes:
+      label: What happened
+      description: What you expected and what happened instead.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Steps to reproduce
+      description: A minimal snippet or repository.
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: civic-ui version
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: Browser and assistive technology
+      description: For example Firefox 140 with NVDA 2025.1.

@@ -1,0 +1,14 @@
+name: Feature request
+description: A new component, prop or variant.
+labels: [enhancement]
+body:
+  - type: textarea
+    attributes:
+      label: Use case
+      description: What should a site be able to do that it cannot today?
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Proposal
+      description: Prefer a prop or variant on an existing component over a new component.

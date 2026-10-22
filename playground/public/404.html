@@ -7,7 +7,11 @@
       // SPA fallback for static hosting: encodes the requested path into
       // index.html's query string; index.html restores it before boot.
       var l = window.location
-      l.replace(l.protocol + '//' + l.host + '/?/' + l.pathname.slice(1).replace(/&/g, '~and~') + (l.search ? '&' + l.search.slice(1).replace(/&/g, '~and~') : '') + l.hash)
+      var keepSegments = l.hostname.endsWith('.github.io') ? 1 : 0
+      var parts = l.pathname.split('/').filter(Boolean)
+      var basePath = keepSegments > 0 && parts.length >= keepSegments ? '/' + parts.slice(0, keepSegments).join('/') + '/' : '/'
+      var appPath = keepSegments > 0 ? '/' + parts.slice(keepSegments).join('/') : l.pathname
+      l.replace(l.protocol + '//' + l.host + basePath + '?/' + appPath.slice(1).replace(/&/g, '~and~') + (l.search ? '&' + l.search.slice(1).replace(/&/g, '~and~') : '') + l.hash)
     </script>
   </head>
   <body></body>

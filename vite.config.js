@@ -4,6 +4,7 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 
 const pkg = JSON.parse(readFileSync(new URL('./package.json', import.meta.url), 'utf8'))
+const buildBase = process.env.CIVIC_UI_BASE || '/'
 
 // Library mode emits the CSS without importing it from the JS. The ES build
 // is therefore civic-ui.unstyled.es.js (the `civic-ui/unstyled` export) and
@@ -40,8 +41,8 @@ function packageVersionInHtml() {
 // MODE=lib builds the library; otherwise Vite serves and builds the playground.
 export default defineConfig({
   plugins: process.env.MODE === 'lib' ? [vue(), styledEsEntry()] : [vue(), packageVersionInHtml()],
-  // The playground is served at the root of its custom domain.
-  base: '/',
+  // Defaults to custom-domain root and is overridden in the Pages workflow.
+  base: buildBase,
   root: process.env.MODE === 'lib' ? undefined : 'playground',
   resolve: {
     alias: {

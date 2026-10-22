@@ -8,7 +8,13 @@ npm run dev
 
 opens it at `http://localhost:5173`.
 
-The public deployment at `civic.servergedoens.de` runs on GitHub Pages and is published by the `Pages` workflow (`.github/workflows/pages.yml`). `npm run build` builds the library into `dist/` and the playground into `playground-dist/`.
+The public deployment at `civic.servergedoens.de` runs on GitHub Pages and is published by the `Pages` workflow (`.github/workflows/pages.yml`).
+
+The workflow uses two jobs:
+- `build`: installs dependencies, configures Pages, builds the playground and uploads `playground-dist` as the Pages artifact.
+- `deploy`: deploys that uploaded artifact to GitHub Pages.
+
+`npm run build` builds the library into `dist/` and the playground into `playground-dist/`.
 
 ## Structure
 

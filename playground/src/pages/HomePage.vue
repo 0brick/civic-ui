@@ -5,12 +5,16 @@
 // it doubles as a live example. The Sections/Components/Theme tabs and their
 // pages are untouched; this only adds what the default (no-slug) route shows.
 // Like any framework homepage, the hero leads with the install command.
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { HeroSection, AppButton, Badge, StatsSection, StepsSection, CtaBanner } from 'civic-ui'
 import CodeBlock from '../components/CodeBlock.vue'
 import { sectionCategories } from '../registry/sections'
 import { componentCategories } from '../registry/components'
 import academyOfFineArts from '../assets/photos/academy-of-fine-arts.jpg'
+import park from '../assets/photos/park.jpg'
+import dresdenCastle from '../assets/photos/dresden-castle.jpg'
+import skyline from '../assets/photos/skyline.jpg'
+import { mode, presetKey } from '../utils/themeState'
 
 const sectionCount = sectionCategories.reduce((n, c) => n + c.items.length, 0)
 const componentCount = componentCategories.reduce((n, c) => n + c.items.length, 0)
@@ -42,6 +46,34 @@ import 'civic-ui/style.css'
     :primary-action="{ label: 'Get started', href: '/services' }"
   />
 </template>`
+
+const HERO_BACKGROUNDS = {
+  default: {
+    image: academyOfFineArts,
+    alt: 'The Dresden Academy of Fine Arts glass dome on the Elbe riverfront, seen from across the water',
+    caption: 'Academy of Fine Arts, Dresden: a few streets from where Civic UI is built'
+  },
+  forest: {
+    image: park,
+    alt: 'A tree-lined city park path with dense green foliage',
+    caption: 'Forest theme: green urban parks and calm, nature-first public spaces'
+  },
+  burgundy: {
+    image: dresdenCastle,
+    alt: 'Historic castle buildings in warm red and stone tones beside a river',
+    caption: 'Burgundy theme: historic civic architecture in warm, rich tones'
+  },
+  slate: {
+    image: skyline,
+    alt: 'A city skyline along the water under cool gray-blue light',
+    caption: 'Slate theme: modern city skylines with calm, cool contrast'
+  }
+}
+
+const heroBackground = computed(() => {
+  if (mode.value !== 'preset') return HERO_BACKGROUNDS.default
+  return HERO_BACKGROUNDS[presetKey.value] || HERO_BACKGROUNDS.default
+})
 </script>
 
 <template>
@@ -52,9 +84,9 @@ import 'civic-ui/style.css'
       align="center"
       stage
       full-height
-      :image="academyOfFineArts"
-      image-alt="The Dresden Academy of Fine Arts glass dome on the Elbe riverfront, seen from across the water"
-      caption="Academy of Fine Arts, Dresden: a few streets from where Civic UI is built"
+      :image="heroBackground.image"
+      :image-alt="heroBackground.alt"
+      :caption="heroBackground.caption"
       scroll-target="#compliance"
       :primary-action="{ label: 'Get started', href: '/docs/getting-started' }"
       :secondary-action="{ label: 'Browse sections', href: '/sections' }"

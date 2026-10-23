@@ -11,9 +11,9 @@ import CodeBlock from '../components/CodeBlock.vue'
 import { sectionCategories } from '../registry/sections'
 import { componentCategories } from '../registry/components'
 import academyOfFineArts from '../assets/photos/academy-of-fine-arts.jpg'
-import park from '../assets/photos/park.jpg'
-import dresdenCastle from '../assets/photos/dresden-castle.jpg'
-import skyline from '../assets/photos/skyline.jpg'
+import forestTheme from '../assets/photos/forest-theme.jpg'
+import burgundyTheme from '../assets/photos/burgundy-theme.jpg'
+import slateTheme from '../assets/photos/slate-theme.jpg'
 import { mode, presetKey } from '../utils/themeState'
 
 const sectionCount = sectionCategories.reduce((n, c) => n + c.items.length, 0)
@@ -54,19 +54,25 @@ const HERO_BACKGROUNDS = {
     caption: 'Academy of Fine Arts, Dresden: a few streets from where Civic UI is built'
   },
   forest: {
-    image: park,
-    alt: 'A tree-lined city park path with dense green foliage',
-    caption: 'Forest theme: green urban parks and calm, nature-first public spaces'
+    image: forestTheme,
+    alt: 'Sunlit forest with tall trees, moss-covered rocks and a woodland path in Bracebridge, Ontario',
+    caption: 'Bracebridge, Ontario: a sunlit woodland path among tall trees and moss-covered rocks',
+    imageFocus: 'center 48%',
+    imageFocusMobile: 'center 42%'
   },
   burgundy: {
-    image: dresdenCastle,
-    alt: 'Historic castle buildings in warm red and stone tones beside a river',
-    caption: 'Burgundy theme: historic civic architecture in warm, rich tones'
+    image: burgundyTheme,
+    alt: 'Rose garden in front of the south facade of Mirabell Palace in Salzburg',
+    caption: 'Rose Garden at Mirabell Palace, Salzburg: red roses before the palace south facade',
+    imageFocus: 'center 58%',
+    imageFocusMobile: 'center 52%'
   },
   slate: {
-    image: skyline,
-    alt: 'A city skyline along the water under cool gray-blue light',
-    caption: 'Slate theme: modern city skylines with calm, cool contrast'
+    image: slateTheme,
+    alt: 'The Blue Wonder, officially Loschwitz Bridge, over the Elbe in Dresden',
+    caption: 'Blue Wonder in Dresden: the Loschwitz Bridge crossing the Elbe above a passenger boat',
+    imageFocus: 'center 50%',
+    imageFocusMobile: 'center 48%'
   }
 }
 
@@ -87,6 +93,8 @@ const heroBackground = computed(() => {
       :image="heroBackground.image"
       :image-alt="heroBackground.alt"
       :caption="heroBackground.caption"
+      :image-focus="heroBackground.imageFocus"
+      :image-focus-mobile="heroBackground.imageFocusMobile"
       scroll-target="#compliance"
       :primary-action="{ label: 'Get started', href: '/docs/getting-started' }"
       :secondary-action="{ label: 'Browse sections', href: '/sections' }"

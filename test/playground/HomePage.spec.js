@@ -18,9 +18,9 @@ describe('playground HomePage hero background', () => {
 
   it('switches hero media and caption for forest, burgundy and slate presets', () => {
     const cases = [
-      ['forest', 'Forest theme: green urban parks and calm, nature-first public spaces'],
-      ['burgundy', 'Burgundy theme: historic civic architecture in warm, rich tones'],
-      ['slate', 'Slate theme: modern city skylines with calm, cool contrast']
+      ['forest', 'Bracebridge, Ontario: a sunlit woodland path among tall trees and moss-covered rocks'],
+      ['burgundy', 'Rose Garden at Mirabell Palace, Salzburg: red roses before the palace south facade'],
+      ['slate', 'Blue Wonder in Dresden: the Loschwitz Bridge crossing the Elbe above a passenger boat']
     ]
 
     for (const [preset, expectedCaption] of cases) {

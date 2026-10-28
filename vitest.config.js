@@ -6,7 +6,9 @@ export default defineConfig({
   plugins: [vue()],
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+      // Same as in vite.config.js, so playground tests don't need dist/.
+      'civic-ui': fileURLToPath(new URL('./src/index.js', import.meta.url))
     }
   },
   test: {

@@ -18,6 +18,8 @@ npm run lint              # eslint
 npm run build:lib         # library + types into dist/
 npm run docs:index        # regenerate docs/component-index.md (CI checks it)
 npm run test:a11y-e2e     # built playground in headless Chromium; needs Node 22+ and Chrome
+npm run release -- minor  # release PR: bump version, move CHANGELOG entries (see CONTRIBUTING.md)
+npm run release -- tag    # after the merge: tag main, CI publishes to npm
 ```
 
 ## Repository map
@@ -38,7 +40,7 @@ npm run test:a11y-e2e     # built playground in headless Chromium; needs Node 22
 | `standards/` | Requirement lists per standard, maintained by hand |
 | `playground/` | Live catalog. Registry in `playground/src/registry/`, examples in `playground/src/examples/` |
 | `test/` | Vitest + jsdom: `components/`, `composables/`, `utils/`, `styles/`, `a11y/axe.spec.js`, `audit/` |
-| `scripts/` | `build.mjs`, `a11y-e2e.mjs`, `component-index.mjs` |
+| `scripts/` | `build.mjs`, `a11y-e2e.mjs`, `component-index.mjs`, `release.mjs` |
 
 ## Layering
 

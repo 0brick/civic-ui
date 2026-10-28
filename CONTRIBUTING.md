@@ -41,7 +41,7 @@ npm run dev
 
 ## Before opening a pull request
 
-All of these must pass. CI runs them on every pull request.
+All of these must pass. CI runs them on every pull request and once a week on `main`.
 
 ```bash
 npm run lint
@@ -76,11 +76,17 @@ The files in [`standards/`](standards/README.md) describe the current version of
 
 ## Releasing (maintainers)
 
-1. Move the `Unreleased` entries in `CHANGELOG.md` under the new version.
-2. Bump `version` in `package.json` and run `npm install --package-lock-only`.
-3. Commit, tag (`git tag vX.Y.Z`) and push branch and tag.
-4. From the tagged commit: `npm run lint && npm test && npm run build:lib`, then `npm publish`.
-5. Run the `Pages` workflow to publish the playground.
+The version bump goes through a pull request like any other change.
+
+1. On `main`, run `npm run release -- patch` (or `minor`, `major`, `x.y.z`). It updates the version, moves the `Unreleased` entries in `CHANGELOG.md` under it and pushes a `release/vX.Y.Z` branch.
+2. Open the pull request from the link it prints and merge it when CI is green.
+3. Run `npm run release -- tag`. It tags the merge commit and pushes the tag.
+
+The `Release` workflow takes it from there: it publishes the package to npm, creates the GitHub release with the changelog section as notes and deploys the playground. It refuses tags that don't match `package.json` or don't point to a commit on `main`. Publishing uses npm trusted publishing, so there is no npm token in the repository.
+
+For a prerelease, use `npm run release -- prerelease --preid beta`. It is published under the `next` tag on npm, leaves `CHANGELOG.md` alone and doesn't deploy the playground.
+
+To redeploy the playground without a release, run the `Pages` workflow by hand.
 
 ## License
 

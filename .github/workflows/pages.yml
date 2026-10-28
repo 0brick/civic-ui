@@ -1,9 +1,9 @@
 name: Pages
 
 # Publishes the playground. Requires Settings > Pages > Source: GitHub Actions.
+# Called by release.yml, or run by hand to redeploy.
 on:
-  release:
-    types: [published]
+  workflow_call:
   workflow_dispatch:
 
 permissions:
@@ -28,7 +28,7 @@ jobs:
         with:
           node-version: 22
           cache: npm
-      - run: npm ci
+      - run: npm ci --ignore-scripts
       - run: npx vite build
         env:
           CIVIC_UI_BASE: ${{ steps.pages.outputs.base_path }}

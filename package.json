@@ -68,6 +68,7 @@
     "docs:index": "node scripts/component-index.mjs",
     "lint": "eslint .",
     "format": "prettier --write .",
+    "release": "node scripts/release.mjs",
     "sbom": "npm sbom --sbom-format cyclonedx --omit dev > sbom.cdx.json"
   },
   "engines": {

@@ -138,11 +138,11 @@ Or from plain JS, without the plugin: `initColorMode({ default: 'auto' })`, `set
 | `--cui-text-secondary` / `--cui-text-danger` / `--cui-text-success` / `--cui-text-warning` | teal / danger / success / warning | Brand and status colors used as text (eyebrows, breadcrumbs, field errors, trends) |
 | `--cui-surface` / `--cui-surface-raised` | white / white | Component surfaces: see [Surfaces](#surfaces) |
 | `--cui-surface-glass` / `--cui-on-surface` | `rgba(255,255,255,.94)` / `--cui-text` | Sticky navbar backdrop / text on a surface |
-| `--cui-font-sans` | Fira Sans stack | Body copy, UI text, headings |
+| `--cui-font-sans` | IBM Plex Sans stack | Body copy, UI text, headings |
 | `--cui-font-serif` | Source Serif 4 stack | Optional editorial accent (pull-quotes) |
 | `--cui-font-heading` | `var(--cui-font-sans)` | `h1`-`h3` and component titles: see [Font choice](#font-choice) |
 | `--cui-heading-weight` / `--cui-heading-letter-spacing` / `--cui-heading-line-height` | `700` / `-0.02em` / `1.15` | Heading style for the same elements |
-| `--cui-heading-display-weight` | `800` | Hero/stage headline weight |
+| `--cui-heading-display-weight` | `700` | Hero/stage headline weight |
 | `--cui-fz-lead` | `1.7rem` | Lead/intro paragraphs (`.cui-lead`, section intros): see [Utilities](utilities.md#text) |
 | `--cui-space-1`…`--cui-space-8` | 0.4rem, 6.4rem | Spacing scale |
 | `--cui-container-max` | `1248px` | Max width of `.cui-container`: the shared width of every section |
@@ -213,11 +213,13 @@ Prefer a key over a raw hex value: `background="highlight"` gets the curated, WC
 
 ## Font choice
 
-Civic UI ships **Fira Sans** (SIL OFL, fully open source) as the one typeface for both body copy and headlines: weight does the work (400 body, 600 buttons/UI, 700-800 headings, 900 for the biggest hero titles) rather than mixing a sans+serif pair. **Source Serif 4** is available for the occasional editorial accent (`TestimonialSection`'s `layout="feature"` pull-quotes).
+Civic UI ships **IBM Plex Sans** (SIL OFL, fully open source) as the one typeface for both body copy and headlines: weight does the work (400 body, 600 buttons/UI, 700 headings and hero titles) rather than mixing a sans+serif pair. Its open apertures and clearly distinct `I`, `l`, `1` and `0`, `O` keep labels, table cells and form values readable at small sizes in data-dense layouts.
+
+It ships as a **variable font**, so every variation is available without extra files: any weight from `100` to `700`, upright and italic, and widths from `85%` to `100%` (`font-stretch: 85%` gives the narrowest cut for tight table columns). Weights above `700` render as `700`. **Source Serif 4** is available for the occasional editorial accent (`TestimonialSection`'s `layout="feature"` pull-quotes).
 
 **Self-hosted, not a Google Fonts CDN import.** Both families are vendored as local `.woff2` files under `src/assets/fonts/` (with their `OFL-*.txt` license text alongside) and declared via plain `@font-face` rules in `src/styles/base.css`: no request ever leaves the visitor's browser for a third-party font host. This matters specifically for public-sector deployments: a `fonts.googleapis.com`/`fonts.gstatic.com` request hands the visitor's IP address to Google on every page view, which is why BSI/GDPR guidance for government sites generally rules out third-party font CDNs: this was a real, widely-cited finding against German public-sector sites that linked Google Fonts directly.
 
-Swap either family via `--cui-font-sans` / `--cui-font-serif` at any time. For a serif/sans pair, set `--cui-font-heading` (default `var(--cui-font-sans)`): it reaches `h1`-`h3` and every title element that isn't a heading tag: card titles and names, the hero headline, footer column titles, testimonial/quote sources. `--cui-heading-weight` (`700`), `--cui-heading-letter-spacing` (`-0.02em`), `--cui-heading-line-height` (`1.15`) and `--cui-heading-display-weight` (`800`, hero/stage headline) tune the rest:
+Swap either family via `--cui-font-sans` / `--cui-font-serif` at any time. For a serif/sans pair, set `--cui-font-heading` (default `var(--cui-font-sans)`): it reaches `h1`-`h3` and every title element that isn't a heading tag: card titles and names, the hero headline, footer column titles, testimonial/quote sources. `--cui-heading-weight` (`700`), `--cui-heading-letter-spacing` (`-0.02em`), `--cui-heading-line-height` (`1.15`) and `--cui-heading-display-weight` (`700`, hero/stage headline) tune the rest:
 
 ```css
 :root {

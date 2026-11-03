@@ -2,7 +2,7 @@
 // element that isn't an h-tag read --cui-font-heading & co., so a serif/sans
 // pair is one token, not a list of component overrides.
 import { describe, it, expect } from 'vitest'
-import { readFileSync } from 'node:fs'
+import { existsSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { cwd } from 'node:process'
 
@@ -15,6 +15,14 @@ describe('heading tokens', () => {
     expect(tokens).toMatch(/--cui-heading-weight:\s*700/)
     expect(tokens).toMatch(/--cui-heading-letter-spacing:\s*-0\.02em/)
     expect(tokens).toMatch(/--cui-heading-line-height:\s*1\.15/)
+  })
+
+  it('defaults to the self-hosted IBM Plex Sans and every face file exists', () => {
+    expect(read('src', 'styles', 'tokens.css')).toMatch(/--cui-font-sans:\s*'IBM Plex Sans',/)
+    const base = read('src', 'styles', 'base.css')
+    const urls = [...base.matchAll(/url\('\.\.\/assets\/fonts\/([^']+)'\)/g)].map((m) => m[1])
+    expect(urls.filter((u) => u.startsWith('ibm-plex-sans-'))).toHaveLength(12)
+    for (const file of urls) expect(existsSync(join(cwd(), 'src', 'assets', 'fonts', file)), file).toBe(true)
   })
 
   it('applies them to h1-h3 and wraps long words', () => {

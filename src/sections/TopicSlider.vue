@@ -111,7 +111,7 @@ watch(() => [props.adaptiveText, props.items], sampleTones)
 
 .cui-topic-slider__title {
   font-size: clamp(2.8rem, 4vw + 1rem, 5.5rem);
-  font-weight: 800;
+  font-weight: var(--cui-heading-display-weight);
   line-height: var(--cui-lh-display);
   letter-spacing: -0.02em;
   margin: 0 0 var(--cui-space-3);

@@ -4,13 +4,15 @@ All notable changes to this project are documented in this file. The format foll
 
 ## [Unreleased]
 
+## [1.1.1] - 2026-11-04
+
 ### Changed
 
 - Source Serif 4 ships as one variable font file per script for weights 600 and 700 instead of two identical copies.
 
 ### Fixed
 
-- `civic-ui/style.css` no longer inlines all fonts as base64 (1.3 MB render-blocking stylesheet, about 150 kB now). The fonts ship as separate files in `dist/fonts/`, and the browser fetches only the subsets a page renders. A Content Security Policy no longer needs `font-src data:`.
+- `civic-ui/style.css` no longer inlines all fonts as base64 (1.3 MB render-blocking stylesheet, about 150 kB now). The fonts ship as separate files in `dist/fonts/`, and the browser fetches only the subsets a page renders. A Content Security Policy no longer needs `font-src data:`. If you copy `dist/civic-ui.css` by hand instead of importing it through a bundler, copy `dist/fonts/` next to it.
 - `HeroSection` loads its image with `fetchpriority="high"`, since it is usually the largest contentful paint.
 
 ## [1.1.0] - 2026-11-04
@@ -23,6 +25,7 @@ All notable changes to this project are documented in this file. The format foll
 
 First public release of Civic UI.
 
-[Unreleased]: https://github.com/0brick/civic-ui/compare/v1.1.0...HEAD
+[Unreleased]: https://github.com/0brick/civic-ui/compare/v1.1.1...HEAD
+[1.1.1]: https://github.com/0brick/civic-ui/compare/v1.1.0...v1.1.1
 [1.1.0]: https://github.com/0brick/civic-ui/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/0brick/civic-ui/releases/tag/v1.0.0

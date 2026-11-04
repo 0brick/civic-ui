@@ -228,6 +228,7 @@ const isDark = computed(() => isDarkBackground(baseThemeVars.value['--cui-hero-b
           :alt="imageAlt"
           :aria-hidden="imageAlt ? undefined : 'true'"
           :referrerpolicy="mediaReferrerPolicy()"
+          fetchpriority="high"
         />
       </div>
       <div class="cui-hero__veil" aria-hidden="true" />
@@ -279,7 +280,8 @@ const isDark = computed(() => isDarkBackground(baseThemeVars.value['--cui-hero-b
         :class="[`cui-hero__stage--align-${align}`, heroImage ? `cui-hero__stage--image-${imagePosition}` : '']"
       >
         <div v-if="heroImage" class="cui-hero__media">
-          <img :src="sanitizeMediaUrl(heroImage)" :alt="imageAlt" :referrerpolicy="mediaReferrerPolicy()" />
+          <!-- perf: the hero photo is usually the page's LCP element -->
+          <img :src="sanitizeMediaUrl(heroImage)" :alt="imageAlt" :referrerpolicy="mediaReferrerPolicy()" fetchpriority="high" />
         </div>
         <div class="cui-hero__text">
           <span v-if="eyebrow" class="cui-hero__eyebrow">{{ eyebrow }}</span>

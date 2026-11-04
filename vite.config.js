@@ -41,8 +41,9 @@ function packageVersionInHtml() {
 // MODE=lib builds the library; otherwise Vite serves and builds the playground.
 export default defineConfig({
   plugins: process.env.MODE === 'lib' ? [vue(), styledEsEntry()] : [vue(), packageVersionInHtml()],
-  // Defaults to custom-domain root and is overridden in the Pages workflow.
-  base: buildBase,
+  // Playground: custom-domain root, overridden in the Pages workflow.
+  // Library: relative, so civic-ui.css points at its fonts/ next to it.
+  base: process.env.MODE === 'lib' ? './' : buildBase,
   root: process.env.MODE === 'lib' ? undefined : 'playground',
   resolve: {
     alias: {
@@ -62,8 +63,12 @@ export default defineConfig({
       output: {
         exports: 'named',
         globals: { vue: 'Vue' },
-        // keep the single stylesheet name predictable regardless of Rollup's hashing
-        assetFileNames: (asset) => asset.name === 'style.css' ? 'civic-ui.css' : asset.name
+        // keep the single stylesheet name predictable regardless of Rollup's hashing;
+        // fonts go to dist/fonts/, referenced relatively from civic-ui.css
+        assetFileNames: (asset) => {
+          if (asset.name?.endsWith('.woff2')) return `fonts/${asset.name}`
+          return asset.name === 'style.css' ? 'civic-ui.css' : asset.name
+        }
       }
     },
     cssCodeSplit: false

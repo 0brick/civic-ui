@@ -8,6 +8,10 @@ All notable changes to this project are documented in this file. The format foll
 
 - Source Serif 4 ships as one variable font file per script for weights 600 and 700 instead of two identical copies.
 
+### Fixed
+
+- `civic-ui/style.css` no longer inlines all fonts as base64 (1.3 MB render-blocking stylesheet, about 150 kB now). The fonts ship as separate files in `dist/fonts/`, and the browser fetches only the subsets a page renders. A Content Security Policy no longer needs `font-src data:`.
+
 ## [1.1.0] - 2026-11-04
 
 ### Changed

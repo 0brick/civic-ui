@@ -22,7 +22,12 @@ describe('heading tokens', () => {
     const base = read('src', 'styles', 'base.css')
     const urls = [...base.matchAll(/url\('\.\.\/assets\/fonts\/([^']+)'\)/g)].map((m) => m[1])
     expect(urls.filter((u) => u.startsWith('ibm-plex-sans-'))).toHaveLength(12)
-    for (const file of urls) expect(existsSync(join(cwd(), 'src', 'assets', 'fonts', file)), file).toBe(true)
+    // Without ?no-inline the library build base64-inlines every font into civic-ui.css.
+    for (const url of urls) expect(url, url).toMatch(/\.woff2\?no-inline$/)
+    for (const url of urls) {
+      const file = url.replace('?no-inline', '')
+      expect(existsSync(join(cwd(), 'src', 'assets', 'fonts', file)), file).toBe(true)
+    }
   })
 
   it('applies them to h1-h3 and wraps long words', () => {

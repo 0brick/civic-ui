@@ -4,6 +4,10 @@ All notable changes to this project are documented in this file. The format foll
 
 ## [Unreleased]
 
+### Changed
+
+- Source Serif 4 ships as one variable font file per script for weights 600 and 700 instead of two identical copies.
+
 ## [1.1.0] - 2026-11-04
 
 ### Changed

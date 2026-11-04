@@ -62,7 +62,7 @@ configureSecurity({ sanitizeHtml: null }) // → throws: configureSecurity() is 
 The items below aren't things a component library can set (they're response headers your backend, reverse proxy or static host adds) but a Civic UI-based frontend is built to be compatible with a strict policy: no inline `eval`/`new Function`, no third-party script/style/font hosts by default (see [Accessibility & privacy conformance → Privacy](accessibility.md#privacy-and-third-party-requests-gdpr-and-bsi)), so a strict policy needs only the exceptions listed below.
 
 ```
-Content-Security-Policy: default-src 'self'; img-src 'self' data: blob:; font-src 'self' data:; style-src 'self'; script-src 'self'; object-src 'none'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'
+Content-Security-Policy: default-src 'self'; img-src 'self' data: blob:; font-src 'self'; style-src 'self'; script-src 'self'; object-src 'none'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'
 Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
 X-Content-Type-Options: nosniff
 Referrer-Policy: strict-origin-when-cross-origin
@@ -71,7 +71,7 @@ Permissions-Policy: geolocation=(), camera=(), microphone=()
 
 What the policy has to allow for the library itself:
 
-- **`font-src 'self' data:`**: the bundled stylesheet (`civic-ui/style.css`) inlines its self-hosted fonts as `data:font/woff2` URLs. Without `data:` here, the policy blocks every font of the library. (Serving `src/assets/fonts` yourself and dropping `data:` works too.)
+- **`font-src 'self'`**: the bundled stylesheet (`civic-ui/style.css`) loads its self-hosted fonts from `dist/fonts/*.woff2`. Your bundler copies them into your build, so they are served from your own origin.
 - **`applyPalette()`** injects one `<style>` element: pass a nonce (`applyPalette(palette, { nonce })`) and add `'nonce-…'` to `style-src`, or generate the palette at build time and ship it as a stylesheet.
 - **Server-side rendering** writes component styles (`--cui-*` custom properties) as `style="…"` attributes, which `style-src 'self'` blocks; client-side rendering sets them through the CSSOM, which CSP doesn't restrict. For SSR, add `'unsafe-hashes'` with the hashes, or `style-src-attr 'unsafe-inline'`.
 - **Trusted Types** (`require-trusted-types-for 'script'`): the icon props render through `v-html`, so a Trusted Types policy needs `sanitizeHtml` to return `TrustedHTML`, e.g. `configureSecurity({ sanitizeHtml: (raw) => DOMPurify.sanitize(raw, { RETURN_TRUSTED_TYPE: true }) })`. The built-in default returns plain strings.

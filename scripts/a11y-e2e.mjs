@@ -496,7 +496,8 @@ async function launchChrome() {
   })
   const wsUrl = await new Promise((resolve, reject) => {
     let buf = ''
-    const timer = setTimeout(() => reject(new Error(`Chrome did not start:\n${buf}`)), 20000)
+    // A cold start on a shared CI runner has taken over 20 s before.
+    const timer = setTimeout(() => reject(new Error(`Chrome did not start within 60 s:\n${buf}`)), 60000)
     proc.stderr.on('data', (chunk) => {
       buf += chunk
       const m = buf.match(/DevTools listening on (ws:\/\/\S+)/)

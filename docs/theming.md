@@ -219,6 +219,8 @@ It ships as a **variable font**, so every variation is available without extra f
 
 **Self-hosted, not a Google Fonts CDN import.** Both families are vendored as local `.woff2` files under `src/assets/fonts/` (with their `OFL-*.txt` license text alongside) and declared via plain `@font-face` rules in `src/styles/base.css`: no request ever leaves the visitor's browser for a third-party font host. This matters specifically for public-sector deployments: a `fonts.googleapis.com`/`fonts.gstatic.com` request hands the visitor's IP address to Google on every page view, which is why BSI/GDPR guidance for government sites generally rules out third-party font CDNs: this was a real, widely-cited finding against German public-sector sites that linked Google Fonts directly.
 
+The built stylesheet references them as separate files in `dist/fonts/`, which your bundler copies into your build. Each file covers one script (`unicode-range`), so a German page downloads only the Latin subsets it actually renders, typically one or two files of 50-75 kB, and only after the stylesheet is parsed.
+
 Swap either family via `--cui-font-sans` / `--cui-font-serif` at any time. For a serif/sans pair, set `--cui-font-heading` (default `var(--cui-font-sans)`): it reaches `h1`-`h3` and every title element that isn't a heading tag: card titles and names, the hero headline, footer column titles, testimonial/quote sources. `--cui-heading-weight` (`700`), `--cui-heading-letter-spacing` (`-0.02em`), `--cui-heading-line-height` (`1.15`) and `--cui-heading-display-weight` (`700`, hero/stage headline) tune the rest:
 
 ```css

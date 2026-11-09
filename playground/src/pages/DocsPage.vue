@@ -116,7 +116,7 @@ const sidebarItems = computed(() => topics.map((t) => ({ label: t.title, href: `
 }
 
 .cui-docs-page__prose :deep(code) {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-family: var(--cui-font-mono);
   font-size: 0.9em;
 }
 .cui-docs-page__prose :deep(:not(pre) > code) {

@@ -4,6 +4,10 @@ All notable changes to this project are documented in this file. The format foll
 
 ## [Unreleased]
 
+### Changed
+
+- Code and monospace text now use self-hosted IBM Plex Mono (SIL OFL, weights 400 and 600, Latin and Latin Extended subsets) instead of falling back to whatever monospace font the operating system happens to provide, which rendered unevenly across platforms. `--cui-font-mono` points at it, and `base.css` applies that token to `code`, `pre`, `kbd` and `samp`, so code samples and the playground's code blocks match the library's typeface with nothing to configure.
+
 ## [1.1.1] - 2026-11-04
 
 ### Changed

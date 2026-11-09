@@ -94,7 +94,7 @@ tbody tr:last-child td {
 
 td code,
 th code {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-family: var(--cui-font-mono);
   font-size: 1.2rem;
   background: var(--cui-bg-subtle);
   padding: 0.1rem 0.5rem;
@@ -103,7 +103,7 @@ th code {
 }
 
 .cui-api-table__type {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-family: var(--cui-font-mono);
   font-size: 1.2rem;
   color: var(--cui-text-muted);
   white-space: nowrap;

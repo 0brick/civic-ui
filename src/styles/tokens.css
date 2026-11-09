@@ -5,7 +5,9 @@
  * subtle, large-blur shadows.
  *
  * Typeface: IBM Plex Sans (SIL OFL, self-hosted variable font) for body and
- * display text, differentiated by weight (400/600/700).
+ * display text, differentiated by weight (400/600/700), with IBM Plex Mono
+ * (SIL OFL, self-hosted) for code: same Plex skeleton, unmistakable 0/O and
+ * 1/l/I at small sizes.
  *
  * Every component reads from these variables only, so a consumer can
  * reskin the whole library by overriding this file (or a subset of it) in
@@ -113,7 +115,7 @@
   /* ---- Typography ---- */
   --cui-font-sans: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
   --cui-font-serif: 'Source Serif 4', Cambria, Georgia, 'Droid Serif', serif;
-  --cui-font-mono: 'Source Code Pro', 'SFMono-Regular', Consolas, monospace;
+  --cui-font-mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas, 'Liberation Mono', monospace;
   /* Headings: h1-h3 and every title element that isn't an h-tag (card
      titles/names, hero/stage title, footer column titles, quote source).
      Defaults reproduce the one-family design; set --cui-font-heading for a

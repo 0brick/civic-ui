@@ -89,7 +89,7 @@ async function copy() {
   padding: var(--cui-space-4);
   overflow-x: auto;
   color: #e8edf3;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-family: var(--cui-font-mono);
   font-size: 1.3rem;
   line-height: 1.6;
 }

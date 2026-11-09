@@ -47,7 +47,7 @@ export function playgroundPages() {
       for (const route of routes) {
         const page = seo.describeRoute(route)
         const body = staticBody(route, page, seo, (slug) => marked.parse(readDoc(slug)))
-        const html = fillTemplate(template, page, seo.canonicalUrl(page.path), body)
+        const html = fillTemplate(template, page, seo, body)
         for (const file of outputFiles(route, parents)) {
           const target = join(outDir, file)
           mkdirSync(dirname(target), { recursive: true })
@@ -76,7 +76,8 @@ function sitemap(routes, seo) {
 
 // --- <head> ----------------------------------------------------------------
 
-function fillTemplate(template, page, url, body) {
+function fillTemplate(template, page, seo, body) {
+  const url = seo.canonicalUrl(page.path)
   let html = template
   const swap = (pattern, replacement) => {
     if (!pattern.test(html)) throw new Error(`playground-pages: no match for ${pattern} in index.html`)
@@ -93,8 +94,41 @@ function fillTemplate(template, page, url, body) {
   setMeta('property', 'og:description', page.description)
   setMeta('name', 'twitter:title', page.title)
   setMeta('name', 'twitter:description', page.description)
+  const image = /property="og:image" content="([^"]*)"/.exec(html)?.[1]
+  swap(/"@graph":\s*\[/, `"@graph": [${pageSchema(page, seo, url, image)},`)
   swap(/<div id="app"><\/div>/, `<div id="app"><noscript>${body}</noscript></div>`)
   return html
+}
+
+// schema.org nodes for one page, as comma-joined JSON for the @graph array.
+function pageSchema(page, seo, url, image) {
+  const nodes = [
+    {
+      '@type': page.type,
+      '@id': `${url}#webpage`,
+      url,
+      name: page.title,
+      ...(page.type === 'TechArticle' ? { headline: page.breadcrumbs.at(-1).name } : {}),
+      description: page.description,
+      image,
+      inLanguage: 'en',
+      isPartOf: { '@id': `${seo.SITE_URL}/#website` },
+      about: { '@id': `${seo.SITE_URL}/#software` }
+    }
+  ]
+  if (page.breadcrumbs.length) {
+    nodes.push({
+      '@type': 'BreadcrumbList',
+      itemListElement: page.breadcrumbs.map((crumb, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        name: crumb.name,
+        item: seo.canonicalUrl(crumb.path)
+      }))
+    })
+  }
+  // "<" can't appear raw: the JSON sits inside a <script> element.
+  return nodes.map((node) => JSON.stringify(node).replace(/</g, '\\u003c')).join(',')
 }
 
 // --- <noscript> content -----------------------------------------------------

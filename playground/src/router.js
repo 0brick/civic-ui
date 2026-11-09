@@ -13,8 +13,9 @@
 //   /embed/:kind/:slug/:i    -> example i alone, for DetailPage's iframe
 //                               preview of `isolated` registry entries
 //
-// A direct hit on e.g. /components/app-button has no matching file on static
-// hosting. public/404.html round-trips the path through index.html's decode
+// The build writes a static HTML file per route (scripts/playground-pages.mjs).
+// A direct hit on anything else, such as /embed/..., has no file on static
+// hosting: public/404.html round-trips the path through index.html's decode
 // script, which restores the real URL before this router reads it.
 import { ref, onMounted, onUnmounted } from 'vue'
 

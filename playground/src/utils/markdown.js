@@ -5,33 +5,7 @@
 // utils/security.js, so this is no exception.
 import { Marked } from 'marked'
 import { sanitizeHtml, sanitizeUrl } from 'civic-ui'
-
-// Base for relative links in docs/*.md that the playground doesn't render.
-const DOCS_BASE = 'https://github.com/0brick/civic-ui/blob/main/docs/'
-
-// docs/*.md filename -> the slug DocsPage renders it at, so a link from one
-// of these files to another (e.g. security.md linking to "accessibility.md")
-// navigates inside this app instead of leaving it.
-const INTERNAL_DOCS = {
-  'getting-started.md': 'getting-started',
-  'accessibility.md': 'accessibility',
-  'security.md': 'security',
-  'audit.md': 'audit',
-  'theming.md': 'theming',
-  'utilities.md': 'utilities',
-  'composables.md': 'composables'
-}
-
-// Only a bare, same-directory reference ("security.md") counts as internal,
-// "sections/hero-section.md" or "../SECURITY.md" point at real files this
-// tab doesn't render, and must resolve externally instead.
-function resolveHref(href) {
-  if (/^(https?:|mailto:|#)/i.test(href)) return href
-  const [pathPart, hash] = href.split('#')
-  const slug = INTERNAL_DOCS[pathPart]
-  if (slug) return `/docs/${slug}${hash ? `#${hash}` : ''}`
-  return new URL(href, DOCS_BASE).href
-}
+import { resolveDocHref } from './docLinks.js'
 
 // GitHub-style heading slug, matching the anchors these docs already link to
 // each other with (e.g. "](#how-to-verify-this-yourself)").
@@ -50,7 +24,7 @@ const marked = new Marked({
       return `<h${depth} id="${id}">${this.parser.parseInline(tokens)}</h${depth}>`
     },
     link({ href, title, tokens }) {
-      const safeHref = sanitizeUrl(resolveHref(href))
+      const safeHref = sanitizeUrl(resolveDocHref(href))
       const titleAttr = title ? ` title="${title}"` : ''
       const external = safeHref.startsWith('http') ? ' target="_blank" rel="noopener noreferrer"' : ''
       return `<a href="${safeHref}"${titleAttr}${external}>${this.parser.parseInline(tokens)}</a>`

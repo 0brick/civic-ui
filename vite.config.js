@@ -2,6 +2,7 @@ import { readFileSync } from 'node:fs'
 import { fileURLToPath, URL } from 'node:url'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
+import { playgroundPages } from './scripts/playground-pages.mjs'
 
 const pkg = JSON.parse(readFileSync(new URL('./package.json', import.meta.url), 'utf8'))
 const buildBase = process.env.CIVIC_UI_BASE || '/'
@@ -40,7 +41,7 @@ function packageVersionInHtml() {
 
 // MODE=lib builds the library; otherwise Vite serves and builds the playground.
 export default defineConfig({
-  plugins: process.env.MODE === 'lib' ? [vue(), styledEsEntry()] : [vue(), packageVersionInHtml()],
+  plugins: process.env.MODE === 'lib' ? [vue(), styledEsEntry()] : [vue(), packageVersionInHtml(), playgroundPages()],
   // Playground: custom-domain root, overridden in the Pages workflow.
   // Library: relative, so civic-ui.css points at its fonts/ next to it.
   base: process.env.MODE === 'lib' ? './' : buildBase,

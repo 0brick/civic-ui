@@ -16,6 +16,8 @@ The workflow uses two jobs:
 
 `npm run build` builds the library into `dist/` and the playground into `playground-dist/`.
 
+The playground build also writes one static HTML file per route and `sitemap.xml` (`scripts/playground-pages.mjs`). Titles and descriptions come from `src/utils/seo.js`, so a new registry entry or docs topic is picked up automatically.
+
 ## Structure
 
 - `src/registry/components.js`, `src/registry/sections.js`: one entry per component/section: its category, prop/event/slot tables, and an ordered `examples` array (simplest first).

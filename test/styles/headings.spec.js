@@ -30,6 +30,15 @@ describe('heading tokens', () => {
     }
   })
 
+  it('ships IBM Plex Mono for code and applies it to code elements', () => {
+    expect(read('src', 'styles', 'tokens.css')).toMatch(/--cui-font-mono:\s*'IBM Plex Mono',/)
+    const base = read('src', 'styles', 'base.css')
+    const mono = [...base.matchAll(/url\('\.\.\/assets\/fonts\/(ibm-plex-mono-[^']+)'\)/g)].map((m) => m[1])
+    // 400/600, Latin and Latin Extended
+    expect(mono).toHaveLength(4)
+    expect(base).toMatch(/code,\s*kbd,\s*pre,\s*samp\s*\{\s*font-family: var\(--cui-font-mono\)/)
+  })
+
   it('applies them to h1-h3 and wraps long words', () => {
     const base = read('src', 'styles', 'base.css')
     expect(base).toMatch(/h1,\s*h2,\s*h3 \{\s*font-family: var\(--cui-font-heading\)/)

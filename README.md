@@ -10,7 +10,7 @@ Accessible Vue 3 components and page sections for public-sector and institutiona
 - **Components** for everything in between: buttons, forms, tables, navigation, overlays, feedback.
 - **A webapp kit** (`AppShell`, `Sidebar`, `DataTable`, `StatCard`) so internal tools share the design system of the public site.
 
-[![Civic UI playground: component and section catalog](docs/assets/screenshot.jpg)](https://civic.servergedoens.de)
+[![Civic UI playground home page: hero with the npm install command and the standards it is checked against](docs/assets/screenshot.jpg)](https://civic.servergedoens.de)
 
 ## Built for public-sector requirements
 
